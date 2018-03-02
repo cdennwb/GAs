@@ -1,0 +1,2 @@
+3/2/18 Worked on csf program a little more, still has a bug where very linear shapes extend and break
+
