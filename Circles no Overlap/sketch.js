@@ -16,7 +16,7 @@ var display = function(shapes){
   }
 }
 
-var notInside(circ, circles){
+var notInside = function(circ, circles){
   for(var i = 0; i < circles.length; i++){
     if(circ.x < circles[i].x - circles[i].r
        && circ.y < circles[i].y - circles[i].r
@@ -28,7 +28,7 @@ var notInside(circ, circles){
   return true;
 }
 
-var notTouching(circ, circles){
+var notTouching = function(circ, circles){
   for(var i = 0; i < circles.length; i++){
     if(dist(circ.x, circ.y, circles[i].x, circles[i].y) < circ.r + circles[i].r){
       return false;
@@ -38,6 +38,7 @@ var notTouching(circ, circles){
 }
 var manageCircs = function(circles){
   var newCircle = circle(random(windowWidth), random(windowHeight), 0);
+  console.log(newCircle.x, newCircle.y, newCircle.r);
   if(notInside(newCircle, circles)){
     while(notTouching){
       newCircle.r += 1;
