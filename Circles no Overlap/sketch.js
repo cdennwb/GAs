@@ -8,15 +8,15 @@ var circle = function(_x, _y, _r){
 }
 
 var win = {
-  x: 400,
-  y: 400
+  x: 5000,
+  y: 3000
 };
 
 var notTouching = function(circ, list){
-  if(dist(circ.x, circ.y, 0, circ.y) < circ.r ||
-    dist(circ.x, circ.y, win.x, circ.y) < circ.r ||
-    dist(circ.x, circ.y, circ.x, 0) < circ.r ||
-    dist(circ.x, circ.y, circ.x, win.y) < circ.r){
+  if(dist(circ.x, circ.y, 0, circ.y) <= circ.r ||
+    dist(circ.x, circ.y, win.x, circ.y) <= circ.r ||
+    dist(circ.x, circ.y, circ.x, 0) <= circ.r ||
+    dist(circ.x, circ.y, circ.x, win.y) <= circ.r){
       return false;
   }
   if(list.length != 0){
@@ -35,9 +35,11 @@ var display = function(circle){
 
 var growCircle = function(current, circleList){
   if(notTouching(current, circleList)){
-    current.r += 1;
-  }else if(current.r != 0){
-    circleList.push(current);
+    current.r += .01;
+  }else{
+    if(current.r != 0){
+      circleList.push(current);
+    }return 0;
   }
 }
 
@@ -51,6 +53,7 @@ var circles = [];
 
 function setup(){
   //frameRate(30);
+  strokeWeight(0);
   createCanvas(win.x, win.y);
 }
 function draw(){

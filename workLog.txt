@@ -1,2 +1,5 @@
 3/2/18 Worked on csf program a little more, still has a bug where very linear shapes extend and break
-
+3/3/18 Worked on Circle drawing program (circle no overlap), still broke, 
+wanna make nice
+3/4/18 Finished the Circle drawing program and it works. Moving onto 
+something else tomorrow. 
