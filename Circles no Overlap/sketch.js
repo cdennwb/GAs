@@ -7,51 +7,56 @@ var circle = function(_x, _y, _r){
   return circ;
 }
 
-var allCircles = [];
+var win = {
+  x: 400,
+  y: 400
+};
 
-var display = function(shapes){
-  clear();
-  for(var i = 0; i < shapes.length; i++){
-    ellipse(shapes[i].x, shapes[i].y, shapes[i].r*2, shapes[i].r*2);
-  }
-}
-
-var notInside = function(circ, circles){
-  for(var i = 0; i < circles.length; i++){
-    if(circ.x < circles[i].x - circles[i].r
-       && circ.y < circles[i].y - circles[i].r
-       && circ.x > circles[i].x + circles[i].r
-       && circ.y > circles[i].y + circles[i].r){
-         return false;
-       }
-  }
-  return true;
-}
-
-var notTouching = function(circ, circles){
-  for(var i = 0; i < circles.length; i++){
-    if(dist(circ.x, circ.y, circles[i].x, circles[i].y) < circ.r + circles[i].r){
+var notTouching = function(circ, list){
+  if(dist(circ.x, circ.y, 0, circ.y) < circ.r ||
+    dist(circ.x, circ.y, win.x, circ.y) < circ.r ||
+    dist(circ.x, circ.y, circ.x, 0) < circ.r ||
+    dist(circ.x, circ.y, circ.x, win.y) < circ.r){
       return false;
+  }
+  if(list.length != 0){
+    for(var i = 0; i < list.length; i++){
+      if(dist(circ.x, circ.y, list[i].x, list[i].y) <= circ.r + list[i].r){
+        return false;
+      }
     }
   }
   return true;
 }
-var manageCircs = function(circles){
-  var newCircle = circle(random(windowWidth), random(windowHeight), 0);
-  console.log(newCircle.x, newCircle.y, newCircle.r);
-  if(notInside(newCircle, circles)){
-    while(notTouching){
-      newCircle.r += 1;
-      ellipse(newCircle.x, newCircle.y, newCircle.r*2, newCircle.r*2);
-      display(circles);
-    }
-    circles.push(newCircle);
+
+var display = function(circle){
+  ellipse(circle.x, circle.y, circle.r*2, circle.r*2);
+}
+
+var growCircle = function(current, circleList){
+  if(notTouching(current, circleList)){
+    current.r += 1;
+  }else if(current.r != 0){
+    circleList.push(current);
   }
 }
+
+var makeCircle = function(){
+  return circle(Math.random()*win.x, Math.random()*win.y,0);
+}
+
+var a = makeCircle();
+var circles = [];
+
 
 function setup(){
-  createCanvas(windowWidth, windowHeight);
+  //frameRate(30);
+  createCanvas(win.x, win.y);
 }
 function draw(){
-  manageCircs(allCircles);
+  growCircle(a, circles);
+  display(a);
+  if(growCircle(a, circles) == 0){
+    a = makeCircle();
+  }
 }
