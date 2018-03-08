@@ -7,9 +7,23 @@ var circle = function(_x, _y, _r){
   return circ;
 }
 
+var makecolor = function(_r, _g, _b){
+  var a = {
+    r: _r,
+    g: _g,
+    b: _b
+  };
+  return a;
+}
+
+var colors = [
+  makecolor(230, 57, 70), makecolor(241, 250, 238), makecolor(168, 218, 220),
+  makecolor(69, 123, 157), makecolor(29, 53, 87)
+]
+
 var win = {
-  x: 5000,
-  y: 3000
+  x: 1920*3,
+  y: 1080*3
 };
 
 var notTouching = function(circ, list){
@@ -38,6 +52,8 @@ var growCircle = function(current, circleList){
     current.r += .01;
   }else{
     if(current.r != 0){
+      var color = colors[parseInt(Math.random()*5)];
+      fill(color.r, color.g, color.b);
       circleList.push(current);
     }return 0;
   }
@@ -47,13 +63,14 @@ var makeCircle = function(){
   return circle(Math.random()*win.x, Math.random()*win.y,0);
 }
 
+
 var a = makeCircle();
 var circles = [];
 
 
 function setup(){
   //frameRate(30);
-  strokeWeight(0);
+  noStroke();
   createCanvas(win.x, win.y);
 }
 function draw(){
