@@ -40,20 +40,24 @@ var notTouching = function(circ, list){
       }
     }
   }
+  if(circ.r > 100){
+    return false;
+  }
   return true;
 }
 
 var display = function(circle){
+  fill(255*circle.x/win.x, circle.y*255/win.y, 255*circle.x*circle.y/(win.y * win.y));
   ellipse(circle.x, circle.y, circle.r*2, circle.r*2);
 }
 
 var growCircle = function(current, circleList){
   if(notTouching(current, circleList)){
-    current.r += .01;
+    current.r += 1;
   }else{
     if(current.r != 0){
-      var color = colors[parseInt(Math.random()*5)];
-      fill(color.r, color.g, color.b);
+      // var color = colors[parseInt(Math.random()*5)];
+      // fill(color.r, color.g, color.b);
       circleList.push(current);
     }return 0;
   }
@@ -70,7 +74,6 @@ var circles = [];
 
 function setup(){
   //frameRate(30);
-  noStroke();
   createCanvas(win.x, win.y);
 }
 function draw(){
